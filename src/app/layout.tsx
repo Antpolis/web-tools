@@ -7,6 +7,7 @@ import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import "./globals.css";
 import { env } from "@/config/env";
+import { PostHogProvider } from "./postHogProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,21 +81,23 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 dark:bg-gray-900`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <ToastProvider />
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <ToastProvider />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );
